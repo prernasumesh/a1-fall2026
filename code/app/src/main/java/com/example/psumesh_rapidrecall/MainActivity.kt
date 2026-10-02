@@ -13,7 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.psumesh_rapidrecall.ui.theme.PsumeshRapidRecallTheme
-
+/**
+ * Purpose: Main class that android launches when the app opens
+ * Design Rationale: None
+ * Outstanding issues: None**/
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -29,7 +29,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-
+/**
+ * Purpose: Every screen of the app is stored here. AppUI checks the gameState.currentScreen and shows the matching screen
+ * Design Rationale: Screen only display data and calls game state functions when buttons are pressed
+ * Outstanding issues: None**/
 @Composable
 fun AppUI(gameState: GameState){
     val screen = gameState.currentScreen

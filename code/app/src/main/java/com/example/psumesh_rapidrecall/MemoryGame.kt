@@ -3,7 +3,13 @@ package com.example.psumesh_rapidrecall
 import android.health.connect.datatypes.units.Length
 import kotlin.random.Random
 import java.util.Date
-
+/**
+ * Purpose : This class holds the game rules and the history for each round played.
+ * This class also creates the sequences that the user guesses.
+ * Records each guess and calculate the total, correct attempts and accuracy.
+ * Design Rationale: Keeps all game logic seperate from the frontend UI
+ * Outstanding issues: None
+ * **/
 class MemoryGame {
     private val guesses = mutableListOf<Guess>()
 
