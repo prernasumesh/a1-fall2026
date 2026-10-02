@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.psumesh_rapidrecall.ui.theme.PsumeshRapidRecallTheme
 /**
  * Purpose: Main class that android launches when the app opens
- * Design Rationale: None
+ * Design Rationale: Minimal so that all the state of the game are in the game state class and all screens are in the appUI class.
  * Outstanding issues: None**/
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -36,25 +36,32 @@ import kotlinx.coroutines.delay
 @Composable
 fun AppUI(gameState: GameState){
     val screen = gameState.currentScreen
-    if(screen == "start") {
+    if(screen == "start")
+    {
         StartScreen(gameState)
     }
-    else if(screen == "chooseLength"){
+    else if(screen == "chooseLength")
+    {
         ChooseLengthScreen(gameState)
     }
-    else if(screen == "showSequence"){
+    else if(screen == "showSequence")
+    {
         ShowSequenceScreen(gameState)
     }
-    else if(screen == "enterGuess") {
+    else if(screen == "enterGuess")
+    {
         EnterGuessScreen(gameState)
     }
-    else if(screen == "feedback"){
+    else if(screen == "feedback")
+    {
         FeedbackScreen(gameState)
     }
-    else if(screen == "log"){
+    else if(screen == "log")
+    {
         LogScreen(gameState)
     }
-    else if(screen == "summary"){
+    else if(screen == "summary")
+    {
         SummaryScreen(gameState)
     }
 }
@@ -66,7 +73,7 @@ fun StartScreen(gameState: GameState) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
     ) {
-            Text("RapidRcall", fontSize = 36.sp)
+            Text("RapidRecall", fontSize = 36.sp)
             Button(onClick = { gameState.goToScreen("chooseLength") }) {Text("Start")}
             Button(onClick = { gameState.goToScreen("log") }) {Text("Log")}
             Button(onClick = { gameState.goToScreen("summary") }) {Text("Summary")}
@@ -82,14 +89,15 @@ fun ChooseLengthScreen(gameState: GameState){
     ) {
         Text("Choose a length(1 to 10)", fontSize = 22.sp)
         Text("${gameState.sequenceLength}", fontSize = 48.sp)
-
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Button(onClick = {
-                if(gameState.sequenceLength > 1){
+                if(gameState.sequenceLength > 1)
+                {
                     gameState.chooseLength(gameState.sequenceLength - 1)
                 }
             }) {Text("-")}
-            Button(onClick =  {
+            Button(onClick =
+                {
                 if (gameState.sequenceLength < 10){
                     gameState.chooseLength(gameState.sequenceLength + 1)
                 }
@@ -100,11 +108,10 @@ fun ChooseLengthScreen(gameState: GameState){
     }
 }
 
-//The following function is from Claude, "Explain how I can do the show one digit at a time logic for the app", 2026-09-30
+/**The following function is from Claude, "Explain how I can do the show one digit at a time logic for the app", 2026-09-30 **/
 @Composable
 fun ShowSequenceScreen(gameState: GameState) {
     var digit by remember { mutableStateOf("") }
-
     // Runs when this screen opens: show each digit for 1 second,
     // then blank for 0.3 seconds, then go to the input screen.
     LaunchedEffect(Unit) {
@@ -135,10 +142,7 @@ fun EnterGuessScreen(gameState: GameState) {
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
     ){
         Text("Enter the sequence", fontSize = 22.sp)
-        OutlinedTextField(
-            value = input,
-            onValueChange = {input = it}
-        )
+        OutlinedTextField(value = input, onValueChange = {input = it})
         Button(onClick = {gameState.submitGuess(input)}) {Text("Submit") }
     }
 }
@@ -150,11 +154,16 @@ fun FeedbackScreen(gameState: GameState) {
         modifier = Modifier.fillMaxSize().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
-    ) {
-        if (guess != null) {
-            if (guess.correct) {
+    )
+    {
+        if (guess != null)
+        {
+            if (guess.correct)
+            {
                 Text("Correct!", fontSize = 36.sp)
-            } else {
+            }
+            else
+            {
                 Text("Incorrect", fontSize = 36.sp)
             }
             Text("Correct sequence: ${guess.target}")
@@ -164,6 +173,7 @@ fun FeedbackScreen(gameState: GameState) {
         Button(onClick = { gameState.goToScreen("start") }) { Text("Home") }
     }
 }
+// The following function is from Claude, "Jetpack Compose screen that shows a scrollable log of all attempts", 2026-09-30
 
 @Composable
 fun LogScreen(gameState: GameState) {
@@ -175,10 +185,10 @@ fun LogScreen(gameState: GameState) {
         Text("Attempt Log", fontSize = 28.sp)
         Button(onClick = { gameState.goToScreen("start") }) { Text("Back") }
 
-        if (gameState.getGuesses().isEmpty()) {
+        if (gameState.getGuesses().isEmpty())
+        {
             Text("No attempts yet.")
         }
-
         for (guess in gameState.getGuesses()) {
             Text(
                 "Length: ${guess.sequenceLength}\n" +
@@ -191,17 +201,19 @@ fun LogScreen(gameState: GameState) {
     }
 }
 
+/** The following function is from Claude, "Jetpack Compose screen that shows total attempts, correct attempts and accuracy percentage", 2026-09-30**/
+
 @Composable
-fun SummaryScreen(gameState: GameState) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
-    ) {
-        Text("Attempt Summary", fontSize = 28.sp)
-        Text("Total attempts: ${gameState.totalGuesses()}")
-        Text("Correct attempts: ${gameState.correctGuesses()}")
-        Text("Accuracy: ${"%.1f".format(gameState.accuracy())}%")
-        Button(onClick = { gameState.goToScreen("start") }) { Text("Back") }
+    fun SummaryScreen(gameState: GameState) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+        ) {
+            Text("Attempt Summary", fontSize = 28.sp)
+            Text("Total attempts: ${gameState.totalGuesses()}")
+            Text("Correct attempts: ${gameState.correctGuesses()}")
+            Text("Accuracy: ${"%.1f".format(gameState.accuracy())}%")
+            Button(onClick = { gameState.goToScreen("start") }) { Text("Back") }
+        }
     }
-}
